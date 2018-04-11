@@ -2,10 +2,10 @@ import cv2
 import numpy as np
 import math
 
-# cap = cv2.VideoCapture('tokyo23162321.mp4')
+cap = cv2.VideoCapture('tokyo23162321.mp4')
 # cap = cv2.VideoCapture('tube.mp4')
 # cap = cv2.VideoCapture('road.mp4')
-cap = cv2.VideoCapture('stairs.mp4')
+# cap = cv2.VideoCapture('stairs.mp4')
 
 if not cap.isOpened():
     print("Error opening video stream or file")
@@ -64,7 +64,7 @@ while cap.isOpened():
 
             cv2.imshow("warped", frame)
 
-            weight = 0.8 ** (30 * (frameCount-math.floor(frameRate / 2))/(frameCount - frameID))
+            weight = 0.8 ** (30 * (frameCount - frameID) / (frameCount-math.floor(frameRate / 2)))
 
             for x in range(width):
                 for y in range(height):
@@ -87,10 +87,10 @@ for x in range(width):
         result[x, y, 1] = result[x, y, 1] / sum_of_weights
         result[x, y, 2] = result[x, y, 2] / sum_of_weights
 
-# cv2.imwrite('extended_exposure_tokyo.png', result)
+cv2.imwrite('extended_exposure_tokyo.png', result)
 # cv2.imwrite('extended_exposure_tube.png', result)
 # cv2.imwrite('extended_exposure_road.png', result)
-cv2.imwrite('extended_exposure_stairs.png', result)
+# cv2.imwrite('extended_exposure_stairs.png', result)
 
 cap.release()
 cv2.destroyAllWindows()
